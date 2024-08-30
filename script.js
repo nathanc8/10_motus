@@ -1,14 +1,10 @@
-let wellPlaced = [];
-let notInWord = [];
-let missplaced = [];
-
 function tryWord(word, base) {
     //Rends le jeu insensible à la casse
     word = word.toLowerCase();
     base = base.toLowerCase();
-    wellPlaced = [];
-    notInWord = [];
-    missplaced = [];
+    let wellPlaced = [];
+    let notInWord = [];
+    let missplaced = [];
 
     let arrayBase = base.split("");
     let arrayWord = word.split("");
@@ -31,27 +27,27 @@ function tryWord(word, base) {
                     arrayBase[index] = null;
                 }
                 //Vérifie si certains charactères sont incorrectes, et les push dans le tableau notInWord
-            } else if (!arrayBase.includes(char)) {
+            } else if (arrayBase.includes(char) === false) {
                 notInWord.push(char);
             }
         });
         console.log("wellPlaced is : ", wellPlaced, typeof wellPlaced);
         console.log("wellPlaced is : ", missplaced, typeof missplaced);
         console.log("wellPlaced is : ", notInWord, typeof notInWord);
-        return { wellPlaced, missplaced, notInWord };
     }
+    return { wellPlaced, missplaced, notInWord };
 }
 
 function guess() {
     let base = "dictionnaire";
     let word = document.getElementById("word").value;
-    tryWord(word, base);
+    let result = tryWord(word, base);
     document.getElementById("word").value = "";
     document.getElementById("try").innerText = word;
-    document.getElementById("well").innerText = "Bien placé: " + wellPlaced.join(", ");
-    document.getElementById("miss").innerText = "Mal placé: " + missplaced.join(", ");
-    document.getElementById("not").innerText = "Pas dans le mot: " + notInWord.join(", ");
-    if (wellPlaced.length === base.length) {
+    document.getElementById("well").innerText = "Bien placé: " + result.wellPlaced.join(", ");
+    document.getElementById("miss").innerText = "Mal placé: " + result.missplaced.join(", ");
+    document.getElementById("not").innerText = "Pas dans le mot: " + result.notInWord.join(", ");
+    if (result.wellPlaced.length === base.length) {
         document.getElementById("win").innerText = "Vous avez gagné";
     }
 }
